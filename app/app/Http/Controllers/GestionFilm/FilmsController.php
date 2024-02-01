@@ -16,31 +16,37 @@ class FilmsController extends Controller
 
     public function index(Request $request){
        $Films = $this->FilmsRepository->paginate();
+       $categorie = $this->FilmsRepository->findCategorie();
 
        if($request->ajax()){
-            $searchfilme = $request->get('searchfilme');
+            $searchfilme = $request->get('query');
             if(!empty($searchfilme)){
                 $searchfilme = str_replace(" ", "%", $searchfilme);
                 $Films = $this->FilmsRepository->searchFilm($searchfilme);
-                return view('films.index', compact('Films'));
+                return view('films.index', compact('Films',"categorie"))->render();
             }
        }
-       return view("films.index", compact("Films"));
+       return view("films.index", compact("Films","categorie"));
     }
 
-    public function create(){
-        return view("films.create", compact("Films"));
+    public function create(Request $id){
+
+        $categorie = $this->FilmsRepository->findCategorie();
+
+        return view("films.create",compact("categorie"));
     }
 
-    public function store(CreateFilms $request){
-        $input = $request->validated();
+    public function store(Request $request){
+        $input = $request->all();
         $this->FilmsRepository->create($input);
-        return view("films.index")->with('success','Vous avez ajoute un film avec reussir');
+        $Films = $this->FilmsRepository->paginate();
+        return view("films.index",compact('Films'))->with('success','Vous avez ajoute un film avec reussir');
     }
 
     public function edit($id){
         $Films = $this->FilmsRepository->find($id);
-        return view("films.edit", compact("Films"));
+        $categorie = $this->FilmsRepository->findCategorie();
+        return view("films.edit", compact("Films","categorie"));
     }
 
     public function show($id){
@@ -51,11 +57,13 @@ class FilmsController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->all();
+        $Films = $this->FilmsRepository->paginate();
         $this->FilmsRepository->update($id, $input);
-        return view("films.edit")->with("success","Vous avez ajouter le film avec reussir");
+        return back()->with("success","Vous avez ajouter le film avec reussir");
     }
 
     public function delete($id){
         $this->FilmsRepository->delete($id);
+        return back()->with("success","Film a ete suprimmer");
     }
 }

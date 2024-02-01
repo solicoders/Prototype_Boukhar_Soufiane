@@ -15,7 +15,7 @@ class BaseRepository implements InterfaceRepository
     }
 
     public function paginate(){
-        return $this->model->paginate(3);
+        return $this->model->paginate(2);
     }
 
     public function find($id){

@@ -19,7 +19,7 @@ class Films extends Model
     public static array $rules = [
         'titre'=> 'required',
         'description'=> 'required',
-        'reference'=> 'required',
+        'reference'=> 'nullable',
         'categorie_id'=> 'required',
     ];
        
