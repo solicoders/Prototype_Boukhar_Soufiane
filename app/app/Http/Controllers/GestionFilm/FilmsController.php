@@ -40,7 +40,8 @@ class FilmsController extends Controller
         $input = $request->all();
         $this->FilmsRepository->create($input);
         $Films = $this->FilmsRepository->paginate();
-        return view("films.index",compact('Films'))->with('success','Vous avez ajoute un film avec reussir');
+        $categorie = $this->FilmsRepository->findCategorie();
+        return view("films.index",compact('Films','categorie'))->with('success','Vous avez ajoute un film avec reussir');
     }
 
     public function edit($id){
