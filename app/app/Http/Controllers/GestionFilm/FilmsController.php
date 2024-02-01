@@ -28,19 +28,24 @@ class FilmsController extends Controller
        return view("films.index", compact("Films"));
     }
 
-    public function create(){
-        return view("films.create", compact("Films"));
+    public function create(Request $id){
+
+        $categorie = $this->FilmsRepository->findCategorie();
+
+        return view("films.create",compact("categorie"));
     }
 
-    public function store(CreateFilms $request){
-        $input = $request->validated();
+    public function store(Request $request){
+        $input = $request->all();
         $this->FilmsRepository->create($input);
-        return view("films.index")->with('success','Vous avez ajoute un film avec reussir');
+        $Films = $this->FilmsRepository->paginate();
+        return view("films.index",compact('Films'))->with('success','Vous avez ajoute un film avec reussir');
     }
 
     public function edit($id){
         $Films = $this->FilmsRepository->find($id);
-        return view("films.edit", compact("Films"));
+        $categorie = $this->FilmsRepository->findCategorie();
+        return view("films.edit", compact("Films","categorie"));
     }
 
     public function show($id){
