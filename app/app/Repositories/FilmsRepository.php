@@ -20,6 +20,10 @@ class FilmsRepository extends BaseRepository
         parent::create($data);
     }
 
+    public function paginate(){
+        return  Films::join('categories','films.categorie_id','=','categories.id')->paginate(3);
+    }
+
     public function findCategorie(){
         return Categories::all();
     }
@@ -29,10 +33,7 @@ class FilmsRepository extends BaseRepository
     }
 
     public function searchFilm($search){
-       return Films::where(function ($query) use ($search) {
-            $query->where('titre', 'like', '%' . $search . '%')
-                ->orWhere('description','like','%'. $search . '%');
-        })
-        ->paginate(3);
+        return Films::join('categories','films.categorie_id','=','categories.id')->where('titre', 'like', '%' . $search . '%')
+        ->orWhere('description','like','%'. $search . '%')->orWhere('genre','like','%'. $search . '%')->paginate(3);
     }
 }

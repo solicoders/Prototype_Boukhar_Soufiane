@@ -16,16 +16,17 @@ class FilmsController extends Controller
 
     public function index(Request $request){
        $Films = $this->FilmsRepository->paginate();
+       $categorie = $this->FilmsRepository->findCategorie();
 
        if($request->ajax()){
-            $searchfilme = $request->get('searchfilme');
+            $searchfilme = $request->get('query');
             if(!empty($searchfilme)){
                 $searchfilme = str_replace(" ", "%", $searchfilme);
                 $Films = $this->FilmsRepository->searchFilm($searchfilme);
-                return view('films.index', compact('Films'));
+                return view('films.index', compact('Films',"categorie"))->render();
             }
        }
-       return view("films.index", compact("Films"));
+       return view("films.index", compact("Films","categorie"));
     }
 
     public function create(Request $id){
@@ -63,5 +64,6 @@ class FilmsController extends Controller
 
     public function delete($id){
         $this->FilmsRepository->delete($id);
+        return back()->with("success","Film a ete suprimmer");
     }
 }

@@ -12,7 +12,7 @@
 <div class="form-group col-sm-12">
     <label for="titre">Categorie</label>
     <select name="categorie_id" id="" class="form-control">
-        <option value="{{ $Films->id }}" >{{ $Films->genre }}</option>
+        <option value="{{ $Films->categorie_id }}" >{{ $Films->genre }}</option>
         @foreach($categorie as $item)
          <option value="{{ $item->id }}">{{ $item->genre }}</option>
         @endforeach
