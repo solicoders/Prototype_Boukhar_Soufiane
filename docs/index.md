@@ -145,6 +145,3 @@ php artisan make:test FilmsTest
 [Rapport](./rapport.md)
 
 
-
-
-
