@@ -24,9 +24,9 @@
                     <td  style="width: 120px">
                        
                         <div class='btn-group'>
-                            <a href=""
-                               class='btn btn-default btn-sm'>
-                                <i class="far fa-eye"></i>
+                            <a href="{{ route('film.delete', ['id' => $Film->id]) }}"
+                               class='btn btn-danger btn-sm'>
+                                Delete
                             </a>
                             <a href="{{ route('film.edit', [$Film->id]) }}"
                                class='btn btn-default btn-sm'>

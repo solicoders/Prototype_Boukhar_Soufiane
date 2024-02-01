@@ -21,5 +21,5 @@ Route::get('/create',[FilmsController::class,'create'])->name('film.create');
 Route::post('/ajouter',[FilmsController::class,'store'])->name('film.store');
 Route::get('/film/{id}/show',[FilmsController::class,'show'])->name('film.detail');
 Route::get('/film/{id}/editer',[FilmsController::class,'edit'])->name('film.edit');
-Route::PUT('/film/{id}/update',[FilmsController::class,'update'])->name('film.update');
+Route::post('/film/{id}/update',[FilmsController::class,'update'])->name('film.update');
 Route::delete('/film/{id}',[FilmsController::class,'delete'])->name('film.delete');

@@ -56,8 +56,9 @@ class FilmsController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->all();
+        $Films = $this->FilmsRepository->paginate();
         $this->FilmsRepository->update($id, $input);
-        return view("films.edit")->with("success","Vous avez ajouter le film avec reussir");
+        return back()->with("success","Vous avez ajouter le film avec reussir");
     }
 
     public function delete($id){
