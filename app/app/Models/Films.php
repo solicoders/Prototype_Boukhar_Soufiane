@@ -16,4 +16,13 @@ class Films extends Model
         return $this->belongsTo('categories');
     }
 
+    public static array $rules = [
+        'titre'=> 'required',
+        'description'=> 'required',
+        'reference'=> 'required',
+        'categorie_id'=> 'required',
+    ];
+       
+    
+
 }
