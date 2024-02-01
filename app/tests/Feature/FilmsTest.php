@@ -31,23 +31,28 @@ class FilmsTest extends TestCase
 
     public function test_update(): void{
         $response = new FilmsRepository(new Films);
-        $response->find(1);
-        $this->assertNotNull($response);
-
+        $now = \Carbon\Carbon::now();
         $input = [
+            'titre' => 'Shadows',
+            'description' => 'Inner serie',
+            'reference' => '4_'.$now,
+            'categorie_id' => 3,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ];
+
+        $film = Films::create($input);
+
+        $response->find($film->id);
+        
+        $inputUpdate = [
             'titre' => 'Test update' 
         ];
-        $response->update(1,$input);
-        $this->assertDatabaseHas('films', $input);
+        $response->update($film->id,$inputUpdate);
+        $this->assertDatabaseHas('films', $inputUpdate);
     }
 
     public function test_delete(): void{
-        $response = new FilmsRepository(new Films);
-        $response->find(1);
-        $this->assertNotNull($response);
-        $response->delete(1);
-    }
-    public function test_store(): void{
         $response = new FilmsRepository(new Films);
         $now = \Carbon\Carbon::now();
         $input = [
@@ -58,7 +63,21 @@ class FilmsTest extends TestCase
             'created_at' => $now,
             'updated_at' => $now,
         ];
-        $response->create($input);
-        $this->assertDatabaseHas('films', $input);
+
+        $film = Films::create($input);
+        $response->find($film->id);
+        $this->assertNotNull($response);
+        $response->delete($film->id);
+    }
+    public function test_store(): void{
+        $response = new FilmsRepository(new Films);
+        $now = \Carbon\Carbon::now();
+        $inputs = [
+            'titre' => 'check',
+            'description' => 'test',
+            'categorie_id' => 2,
+        ];
+        $response->create($inputs);
+        $this->assertDatabaseHas('films', $inputs);
     }
 }
